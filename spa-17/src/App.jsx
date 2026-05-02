@@ -1,15 +1,7 @@
 import { useState } from 'react'
 
 import './App.css'
-
-// 1st COMPONENT Header
-const Header = () => {
-  return (
-    <header className="header">
-      <h1>Personal Project Showcase App</h1>
-    </header>
-  );
-};
+import Header from './Components/Header'
 
 function App() {
   // const [count, setCount] = useState(0)
