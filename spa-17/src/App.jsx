@@ -80,11 +80,11 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleAddProject = (newProject) => {
-    setProjects([...projects, newProject]);
+    setProjects((prev) => [...prev, newProject]);
   };
 
   const handleDeleteProject = (id) => {
-    setProjects(projects.filter((p) => p.id !== id));
+    setProjects((prev) => prev.filter((proj) => proj.id !== id));
   };
 
   const filteredProjects = projects.filter((p) =>
