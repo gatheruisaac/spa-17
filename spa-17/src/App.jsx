@@ -37,7 +37,7 @@ const ProjectForm = ({ onAddProject }) => {
 const ProjectItem = ({ project }) => {
   return (
     <div className="project-item">
-      <button className="delete-btn">✕</button>
+      <button className="delete-btn" onClick={() => onDelete(project.id)}>✕</button>
       <div className="project-details">
         <h3>{project.title}</h3>
         <p>{project.description}</p>
