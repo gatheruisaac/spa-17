@@ -9,11 +9,13 @@ const ProjectForm = ({ onAddProject }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !description) return;
+    
     onAddProject({ id: Date.now(), title, description });
     setTitle('');
     setDescription('');
   };
 
+  
   return (
     <div className="card">
       <h2>Add Project</h2>
@@ -32,16 +34,77 @@ const ProjectForm = ({ onAddProject }) => {
   );
 };
 
+const ProjectItem = ({ project }) => {
+  return (
+    <div className="project-item">
+      <button className="delete-btn">✕</button>
+      <div className="project-details">
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+      </div>
+    </div>
+  );
+};
+
+const ProjectList = ({ projects, searchTerm, onSearchChange, onDelete }) => {
+  return (
+    <div className="card list-section">
+      <input
+        className="search-input"
+        type="text"
+        placeholder="Search Projects"
+        value={searchTerm}
+        onChange={(e) => onSearchChange(e.target.value)}
+      />
+      <div className="projects-container">
+        {projects.length > 0 ? (
+          projects.map((proj) => (
+            <ProjectItem key={proj.id} project={proj} onDelete={onDelete} />
+          ))
+        ) : (
+          <p className="no-projects">No projects found.</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [projects, setProjects] = useState([
+    { id: 1, title: "Project glaxosmith", description: "project management system for glaxosmith" },
+    { id: 2, title: "Project 2: jungle nuts epz", description: "Media Advertisement" },
+    { id: 3, title: "Project 3: KVM thika", description: "payroll system for KVM in thika" },
+  ]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleAddProject = (newProject) => {
+    setProjects([...projects, newProject]);
+  };
+
+  const handleDeleteProject = (id) => {
+    setProjects(projects.filter((p) => p.id !== id));
+  };
+
+  const filteredProjects = projects.filter((p) =>
+    p.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="app-container">
-    <Header />
+      <Header />
+      <main className="main-content">
+        <ProjectForm onAddProject={handleAddProject} />
+        <ProjectList
+         projects={filteredProjects} 
+         searchTerm={searchTerm}
+         onSearchChange={setSearchTerm}
+         onDelete={handleDeleteProject}
+        />
+      </main>
     </div>
-
-  )
+  );
 }
 
 export default App
