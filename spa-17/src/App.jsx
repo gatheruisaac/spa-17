@@ -1,73 +1,11 @@
 import { useState } from 'react'
 import './App.css'
 import Header from './Components/Header'
+import ProjectForm from './Components/ProjectForm'
+import ProjectList from './Components/ProjectList'
 
-const ProjectForm = ({ onAddProject }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!title || !description) return;
-    
-    onAddProject({ id: Date.now(), title, description });
-    setTitle('');
-    setDescription('');
-  };
 
-  
-  return (
-    <div className="card">
-      <h2>Add Project</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Title</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Description</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-        </div>
-        <button type="submit">Add</button>
-      </form>
-    </div>
-  );
-};
-
-const ProjectItem = ({ project, onDelete }) => {
-  return (
-    <div className="project-item">
-      <button className="delete-btn" onClick={() => onDelete(project.id)}>✕</button>
-      <div className="project-details">
-        <h3>{project.title}</h3>
-        <p>{project.description}</p>
-      </div>
-    </div>
-  );
-};
-
-const ProjectList = ({ projects, searchTerm, onSearchChange, onDelete }) => {
-  return (
-    <div className="card list-section">
-      <input
-        className="search-input"
-        type="text"
-        placeholder="Search Projects"
-        value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
-      />
-      <div className="projects-container">
-        {projects.length > 0 ? (
-          projects.map((proj) => (
-            <ProjectItem key={proj.id} project={proj} onDelete={onDelete} />
-          ))
-        ) : (
-          <p className="no-projects">No projects found.</p>
-        )}
-      </div>
-    </div>
-  );
-};
 
 
 function App() {
