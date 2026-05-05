@@ -1,12 +1,28 @@
 import { useState } from 'react';
 
+// =============================================
+// COMPONENT: ProjectForm
+// Rubric: Component Hierarchy + Event Handling
+// Controlled form for adding a new project.
+// Owns its own local state for title/description
+// Sends completed project up via onAddProject prop
+
+
 const ProjectForm = ({ onAddProject }) => {
+
+  // Local state — Rubric: State Management
+  // These don't need to live in App since nothing
+  // else depends on them
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+
+  // Rubric: Event Handling
+  // Prevents default form reload, validates inputs,
+  // calls parent handler, then resets the form
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !description) return;
+    if (!title || !description) return;// guard: no empty submissions
     
     onAddProject({ id: Date.now(), title, description });
     setTitle('');
